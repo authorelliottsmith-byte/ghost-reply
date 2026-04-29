@@ -57,22 +57,39 @@ Additionally, apply light negotiation principles:
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "gpt-4.1-mini",
+        model: "gpt-5.3",
         input: buildPrompt()
       })
     });
 
     const data = await response.json();
-    const text = data.output[0].content[0].text;
+
+    // 🔥 IMPORTANT: Log full response
+    console.log("OpenAI response:", JSON.stringify(data));
+
+    // ❗ Handle API errors explicitly
+    if (data.error) {
+      throw new Error(data.error.message);
+    }
+
+    // ✅ Safe extraction
+    const text =
+      data.output?.[0]?.content?.[0]?.text ||
+      "Couldn't generate a reply. Try again.";
 
     return {
       statusCode: 200,
       body: JSON.stringify({ text })
     };
+
   } catch (err) {
+    console.error("FUNCTION ERROR:", err);
+
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: "Something went wrong—try again in a second." })
+      body: JSON.stringify({
+        error: err.message
+      })
     };
   }
 }
