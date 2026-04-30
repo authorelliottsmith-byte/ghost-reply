@@ -632,7 +632,7 @@
       margin: 0 auto;
       min-height: auto;
       align-content: center;
-      padding: 48px 20px 64px;
+      padding: 64px 20px 64px;
       opacity: 0;
       transform: translateY(14px);
       transition: opacity 280ms ease, transform 280ms ease;
@@ -706,6 +706,10 @@
       padding: 18px;
       resize: none;
       overflow: hidden;
+    }
+
+    .context-details {
+      min-height: 96px;
     }
 
     select {
@@ -1032,7 +1036,7 @@
         gap: 28px;
         align-content: start;
         min-height: auto;
-        padding: 24px 14px 42px;
+        padding: 38px 14px 42px;
       }
 
       .select-grid,
@@ -1179,6 +1183,12 @@
           <p class="helper">We’ll help you respond naturally and confidently.</p>
         </div>
 
+        <div class="section">
+          <label for="extra-context">Add context (optional)</label>
+          <textarea class="context-details" id="extra-context" placeholder="Add any extra details… (e.g. how you feel, situation, what you want to say)" autocomplete="off"></textarea>
+          <p class="helper">Optional: add details like your intent, feelings, or situation.</p>
+        </div>
+
         <div class="select-grid">
           <div class="section">
             <label for="context">Context</label>
@@ -1264,6 +1274,7 @@
     const landingSection = document.querySelector(".landing");
     const appSection = document.querySelector("#app");
     const messageInput = document.querySelector("#message");
+    const extraContextInput = document.querySelector("#extra-context");
     const contextSelect = document.querySelector("#context");
     const toneSelect = document.querySelector("#tone");
     const intentSelect = document.querySelector("#intent");
@@ -1296,6 +1307,11 @@
 
     messageInput.addEventListener("input", () => {
       autoResize(messageInput);
+      setStatus("");
+    });
+
+    extraContextInput.addEventListener("input", () => {
+      autoResize(extraContextInput);
       setStatus("");
     });
 
@@ -1369,7 +1385,11 @@
 
     async function generateReply(options = {}) {
       const message = options.useLastInputs ? lastUserMessage : messageInput.value.trim();
-      const context = options.useLastInputs ? lastContext : contextSelect.value;
+      const contextType = contextSelect.value;
+      const extraContext = extraContextInput.value.trim();
+      const context = options.useLastInputs
+        ? lastContext
+        : `${contextType}${extraContext ? " — " + extraContext : ""}`;
       const tone = options.useLastInputs ? lastTone : toneSelect.value;
       const intent = options.useLastInputs ? lastIntent : intentSelect.value;
       const modifier = options.modifier || "";
@@ -1499,6 +1519,7 @@
 
     renderReply("");
     autoResize(messageInput);
+    autoResize(extraContextInput);
 
     syncViewWithHash({ instant: true });
   </script>

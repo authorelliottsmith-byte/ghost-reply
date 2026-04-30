@@ -6,10 +6,12 @@ exports.handler = async function (event) {
     console.log("ENV KEY EXISTS:", !!process.env.OPENAI_API_KEY);
 
     const buildPrompt = () => {
+      const providedContext = context?.trim() || "No additional context provided.";
+
       let base = `
 You are a highly skilled communicator who writes like a real person.
 
-Context: ${context}
+Context: ${providedContext}
 Tone: ${tone}
 Intent: ${intent}
 
@@ -17,12 +19,14 @@ Instructions:
 - Write like a real person would text or email.
 - Keep it natural, conversational, and easy to read.
 - Match the selected tone without exaggerating it.
+- If extra context is provided, use it to guide tone, intent, and nuance.
 - Follow the user's intent:
   - Accept → positive and interested
   - Decline → polite and respectful rejection
   - Neutral → non-committal response
 - Do NOT use emojis unless the original message clearly uses multiple emojis.
   If used, keep them minimal and natural.
+- Avoid profanity, inappropriate slang, or offensive language while still sounding natural and human.
 - Avoid corporate buzzwords or stiff language.
 - Keep it concise but complete.
 
