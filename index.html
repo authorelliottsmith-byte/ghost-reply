@@ -202,7 +202,7 @@
       width: min(100%, 680px);
       margin: 32px auto 0;
       animation: fadeUp 250ms ease 90ms both;
-      filter: drop-shadow(0 18px 28px rgba(59, 130, 246, 0.12));
+      filter: drop-shadow(0 8px 14px rgba(59, 130, 246, 0.07));
     }
 
     .preview-wrap::before {
@@ -284,7 +284,7 @@
       opacity: 0;
       transform: translateY(12px);
       animation: fadeUp 420ms ease 80ms forwards;
-      margin-left: min(0px, calc((1260px - 100vw) / 2 + 24px));
+      margin-left: min(28px, calc((1260px - 100vw) / 2 + 72px));
     }
 
     .mockup-image {
@@ -448,6 +448,37 @@
       color: var(--accent-dark);
     }
 
+    .legal-sections {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      width: min(100%, 860px);
+      margin: 0 auto;
+      padding: 0 20px 38px;
+      background: #f8fafc;
+    }
+
+    .legal-card {
+      padding: 22px;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      border-radius: 18px;
+      background: #ffffff;
+      color: #475569;
+      text-align: left;
+    }
+
+    .legal-card h3 {
+      margin: 0 0 8px;
+      color: #0f172a;
+      font-size: 1rem;
+    }
+
+    .legal-card p {
+      margin: 0;
+      font-size: 0.92rem;
+      line-height: 1.55;
+    }
+
     body.is-app-view .footer {
       border-top-color: rgba(255, 255, 255, 0.08);
       background: #06172d;
@@ -460,6 +491,10 @@
 
     body.is-app-view .footer a:hover {
       color: #ffffff;
+    }
+
+    body.is-app-view .legal-sections {
+      display: none;
     }
 
     .app-shell {
@@ -486,8 +521,10 @@
 
     body.is-app-view {
       background:
-        radial-gradient(circle at 18% 0%, rgba(59, 130, 246, 0.22), transparent 32rem),
-        linear-gradient(to bottom, #06172d 0%, #0b2340 58%, #102f52 100%);
+        radial-gradient(circle at 18% 4%, rgba(59, 130, 246, 0.26), transparent 28rem),
+        radial-gradient(circle at 88% 18%, rgba(14, 165, 233, 0.12), transparent 26rem),
+        radial-gradient(circle at 50% 110%, rgba(243, 234, 220, 0.16), transparent 34rem),
+        linear-gradient(135deg, #06172d 0%, #0a2545 42%, #123d66 72%, #0a2746 100%);
     }
 
     .card {
@@ -825,6 +862,11 @@
         justify-content: flex-start;
       }
 
+      .legal-sections {
+        grid-template-columns: 1fr;
+        padding: 0 14px 30px;
+      }
+
       .cta,
       .generate,
       .small-button {
@@ -996,11 +1038,23 @@
       </div>
     </section>
 
+    <div class="legal-sections" aria-label="About and privacy information">
+      <section class="legal-card" id="about">
+        <h3>About GhostReply</h3>
+        <p>GhostReply helps you draft clear, natural replies for texts, emails, work messages, and everyday conversations.</p>
+      </section>
+
+      <section class="legal-card" id="privacy">
+        <h3>Privacy</h3>
+        <p>GhostReply does not require a login or database. Messages are sent only to generate a reply through the secure backend.</p>
+      </section>
+    </div>
+
     <footer class="footer">
       <span>© Elliott Smith 2026</span>
       <a href="mailto:es0144@uah.edu" aria-label="Contact">Contact</a>
-      <a href="#" aria-label="About">About</a>
-      <a href="#" aria-label="Privacy">Privacy</a>
+      <a href="#about" aria-label="About">About</a>
+      <a href="#privacy" aria-label="Privacy">Privacy</a>
     </footer>
   </main>
 
