@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "GhostReply",
+  "version": "1.0.0",
+  "description": "Generate quick, natural replies with GhostReply.",
+  "action": {
+    "default_title": "GhostReply",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "clipboardWrite"
+  ],
+  "host_permissions": [
+    "https://ghost-reply.netlify.app/*"
+  ]
+}
