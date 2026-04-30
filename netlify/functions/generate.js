@@ -1,7 +1,7 @@
 exports.handler = async function (event) {
   try {
     const body = event.body ? JSON.parse(event.body) : {};
-    const { message, context, tone, modifier } = body;
+    const { message, context, tone, intent = "Neutral", modifier } = body;
 
     console.log("ENV KEY EXISTS:", !!process.env.OPENAI_API_KEY);
 
@@ -11,6 +11,20 @@ You are a highly skilled communicator who writes like a real person.
 
 Context: ${context}
 Tone: ${tone}
+Intent: ${intent}
+
+Instructions:
+- Write like a real person would text or email.
+- Keep it natural, conversational, and easy to read.
+- Match the selected tone without exaggerating it.
+- Follow the user's intent:
+  - Accept → positive and interested
+  - Decline → polite and respectful rejection
+  - Neutral → non-committal response
+- Do NOT use emojis unless the original message clearly uses multiple emojis.
+  If used, keep them minimal and natural.
+- Avoid corporate buzzwords or stiff language.
+- Keep it concise but complete.
 
 Write a natural, human reply to:
 ${message}

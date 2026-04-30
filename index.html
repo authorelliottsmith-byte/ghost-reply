@@ -613,8 +613,8 @@
 
     .select-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
       margin-top: 24px;
     }
 
@@ -1013,6 +1013,15 @@
               <option>Negotiation</option>
             </select>
           </div>
+
+          <div class="section">
+            <label for="intent">Intent</label>
+            <select id="intent">
+              <option>Accept</option>
+              <option>Decline</option>
+              <option selected>Neutral</option>
+            </select>
+          </div>
         </div>
 
         <button class="generate" type="button" id="generate">Generate reply →</button>
@@ -1068,6 +1077,7 @@
     const messageInput = document.querySelector("#message");
     const contextSelect = document.querySelector("#context");
     const toneSelect = document.querySelector("#tone");
+    const intentSelect = document.querySelector("#intent");
     const generateButton = document.querySelector("#generate");
     const regenerateButton = document.querySelector("#regenerate");
     const copyButton = document.querySelector("#copy");
@@ -1080,6 +1090,7 @@
     let lastUserMessage = "";
     let lastContext = contextSelect.value;
     let lastTone = toneSelect.value;
+    let lastIntent = intentSelect.value;
 
     startButtons.forEach((button) => button.addEventListener("click", (event) => {
       event.preventDefault();
@@ -1168,6 +1179,7 @@
       const message = options.useLastInputs ? lastUserMessage : messageInput.value.trim();
       const context = options.useLastInputs ? lastContext : contextSelect.value;
       const tone = options.useLastInputs ? lastTone : toneSelect.value;
+      const intent = options.useLastInputs ? lastIntent : intentSelect.value;
       const modifier = options.modifier || "";
 
       if (!message) {
@@ -1179,6 +1191,7 @@
       lastUserMessage = message;
       lastContext = context;
       lastTone = tone;
+      lastIntent = intent;
 
       setStatus("");
       setLoading(true);
@@ -1191,6 +1204,7 @@
             message,
             context,
             tone,
+            intent,
             modifier
           })
         });
