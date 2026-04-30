@@ -50,19 +50,24 @@ Additionally, apply light negotiation principles:
       return base;
     };
 
-    const response = await fetch("https://api.openai.com/v1/responses", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        model: "gpt-5.3",
-        input: buildPrompt()
-      })
-    });
+const body = event.body ? JSON.parse(event.body) : {};
+const { message, context, tone, modifier } = body;
 
-    const data = await response.json();
+console.log("ENV KEY:", process.env.OPENAI_API_KEY);
+
+const response = await fetch("https://api.openai.com/v1/responses", {
+  method: "POST",
+  headers: {
+    "Authorization": `Bearer ${process.env.OPENAI_API_KEY2}`,
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    model: "gpt-4.1-mini",
+    input: buildPrompt()
+  })
+});
+
+console.log("STATUS:", response.status);
 
     // 🔥 IMPORTANT: Log full response
     console.log("OpenAI response:", JSON.stringify(data));
