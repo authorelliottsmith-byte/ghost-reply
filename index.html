@@ -71,8 +71,8 @@
 
     .site-header {
       position: absolute;
-      top: -54px;
-      left: -54px;
+      top: -76px;
+      left: -59px;
       z-index: 1000;
     }
 
@@ -90,7 +90,7 @@
     .logo {
       display: inline-flex;
       align-items: center;
-      height: 250px !important;
+      height: 220px !important;
       width: auto !important;
       max-width: none !important;
       min-width: 0;
@@ -106,7 +106,7 @@
 
     .logo img {
       display: block;
-      height: 250px !important;
+      height: 220px !important;
       width: auto !important;
       max-width: none !important;
       flex-shrink: 0;
@@ -776,8 +776,8 @@
       }
 
       .site-header {
-        top: -36px;
-        left: -38px;
+        top: -60px;
+        left: -46px;
       }
 
       .logo {
@@ -1085,6 +1085,7 @@
     const replyBox = document.querySelector("#reply");
     const statusText = document.querySelector("#status");
     const modifierButtons = document.querySelectorAll("[data-modifier]");
+    const APP_HASH = "#app";
 
     let currentReply = "";
     let lastUserMessage = "";
@@ -1101,6 +1102,8 @@
       event.preventDefault();
       showHomeView();
     }));
+
+    window.addEventListener("hashchange", syncViewWithHash);
 
     messageInput.addEventListener("input", () => {
       autoResize(messageInput);
@@ -1224,8 +1227,57 @@
       }
     }
 
-    function showAppView() {
+    function updateHashForApp() {
+      if (window.location.hash !== APP_HASH) {
+        window.location.hash = APP_HASH;
+      }
+    }
+
+    function removeHashForHome() {
+      if (window.location.hash) {
+        window.history.pushState(
+          null,
+          "",
+          `${window.location.pathname}${window.location.search}`
+        );
+      }
+    }
+
+    function syncViewWithHash(options = {}) {
+      if (window.location.hash === APP_HASH) {
+        showAppView({ updateHash: false, instant: options.instant });
+        return;
+      }
+
+      const targetHash = window.location.hash;
+      showHomeView({ updateHash: false, scrollTop: !targetHash });
+
+      if (targetHash) {
+        window.requestAnimationFrame(() => {
+          document.querySelector(targetHash)?.scrollIntoView({
+            behavior: options.instant ? "auto" : "smooth",
+            block: "start"
+          });
+        });
+      }
+    }
+
+    function showAppView(options = {}) {
+      const shouldUpdateHash = options.updateHash !== false;
+
+      if (shouldUpdateHash) {
+        updateHashForApp();
+      }
+
       document.body.classList.add("is-app-view");
+
+      if (options.instant) {
+        landingSection.classList.add("is-hidden");
+        appSection.classList.add("is-mounted", "is-visible");
+        messageInput.focus();
+        return;
+      }
+
       landingSection.classList.add("is-leaving");
 
       window.setTimeout(() => {
@@ -1239,19 +1291,27 @@
       }, 240);
     }
 
-    function showHomeView() {
+    function showHomeView(options = {}) {
+      const shouldUpdateHash = options.updateHash !== false;
+      const shouldScrollTop = options.scrollTop !== false;
+
+      if (shouldUpdateHash) {
+        removeHashForHome();
+      }
+
       document.body.classList.remove("is-app-view");
       appSection.classList.remove("is-visible", "is-mounted");
       landingSection.classList.remove("is-hidden", "is-leaving");
-      window.scrollTo({ top: 0, behavior: "smooth" });
+
+      if (shouldScrollTop) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
     }
 
     renderReply("");
     autoResize(messageInput);
 
-    if (window.location.hash === "#app") {
-      showAppView();
-    }
+    syncViewWithHash({ instant: true });
   </script>
 </body>
 </html>
