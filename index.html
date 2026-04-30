@@ -80,6 +80,13 @@
       padding: 0;
     }
 
+    .home-link {
+      display: inline-flex;
+      align-items: center;
+      color: inherit;
+      text-decoration: none;
+    }
+
     .logo {
       display: inline-flex;
       align-items: center;
@@ -89,6 +96,12 @@
       min-width: 0;
       flex-shrink: 0;
       transform: none !important;
+      cursor: pointer;
+    }
+
+    .logo:focus-visible {
+      outline: 2px solid rgba(255, 255, 255, 0.72);
+      outline-offset: 4px;
     }
 
     .logo img {
@@ -124,10 +137,12 @@
       overflow: hidden;
       background: linear-gradient(
         to bottom,
-        #0b1f3a 0%,
-        #0b1f3a 55%,
-        rgba(11, 31, 58, 0.85) 65%,
-        rgba(221, 221, 221, 0.6) 80%,
+        #06172d 0%,
+        #06172d 58%,
+        #1b2e43 67%,
+        #6e7984 78%,
+        #d2d4d6 88%,
+        #dddddd 92%,
         #dddddd 100%
       );
       color: var(--white);
@@ -136,7 +151,7 @@
     .hero-content {
       width: min(100%, 768px);
       margin: 0 auto;
-      padding: 92px 20px 64px;
+      padding: 92px 20px 30px;
     }
 
     .hero-copy {
@@ -187,6 +202,7 @@
       width: min(100%, 680px);
       margin: 32px auto 0;
       animation: fadeUp 250ms ease 90ms both;
+      filter: drop-shadow(0 18px 28px rgba(59, 130, 246, 0.12));
     }
 
     .preview-wrap::before {
@@ -202,9 +218,7 @@
       border: 1px solid rgba(255, 255, 255, 0.22);
       border-radius: 20px;
       background: rgba(255, 255, 255, 0.96);
-      box-shadow:
-        0 18px 42px rgba(59, 130, 246, 0.14),
-        0 18px 36px rgba(15, 23, 42, 0.13);
+      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12);
       color: #1e293b;
       text-align: left;
     }
@@ -256,11 +270,11 @@
 
     .mockup-container {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      max-width: 1200px;
+      grid-template-columns: minmax(0, 1.08fr) minmax(430px, 0.92fr);
+      max-width: 1260px;
       margin: 0 auto;
-      padding: 80px 24px;
-      gap: 60px;
+      padding: 36px 24px 66px;
+      gap: clamp(48px, 6vw, 76px);
       align-items: center;
     }
 
@@ -270,12 +284,12 @@
       opacity: 0;
       transform: translateY(12px);
       animation: fadeUp 420ms ease 80ms forwards;
-      margin-left: calc((1200px - 100vw) / 2);
+      margin-left: min(0px, calc((1260px - 100vw) / 2 + 24px));
     }
 
     .mockup-image {
       display: block;
-      width: 120%;
+      width: min(112%, 780px);
       max-width: none;
       margin-left: 0;
       border-radius: 20px;
@@ -290,11 +304,11 @@
     }
 
     .feature-label {
-      margin: 0 0 12px;
-      color: #64748b;
-      font-size: 0.78rem;
-      font-weight: 820;
-      letter-spacing: 0.06em;
+      margin: 0 0 14px;
+      color: #475569;
+      font-size: 0.86rem;
+      font-weight: 850;
+      letter-spacing: 0.075em;
       text-transform: uppercase;
       opacity: 0;
       transform: translateY(10px);
@@ -302,7 +316,7 @@
     }
 
     .feature-heading {
-      max-width: 460px;
+      max-width: 540px;
       margin: 0;
       color: #111827;
       font-size: clamp(2.2rem, 4.6vw, 4rem);
@@ -315,7 +329,7 @@
     }
 
     .feature-copy {
-      max-width: 480px;
+      max-width: 560px;
       margin: 18px 0 0;
       color: #4b5563;
       font-size: 1.02rem;
@@ -350,7 +364,7 @@
     .value-inner {
       width: min(100%, 768px);
       margin: 0 auto;
-      padding: 26px 20px 34px;
+      padding: 22px 20px 42px;
     }
 
     .value-section h2 {
@@ -414,22 +428,38 @@
       flex-wrap: wrap;
       justify-content: center;
       gap: 12px 18px;
-      width: min(100%, 768px);
+      width: 100%;
       margin: 0 auto;
-      padding: 24px 20px 34px;
-      background: #f8fafc;
-      color: #7b8797;
-      font-size: 0.86rem;
+      padding: 30px 20px 38px;
+      border-top: 1px solid rgba(15, 23, 42, 0.08);
+      background: #eef2f7;
+      color: #5f6f83;
+      font-size: 0.9rem;
+      font-weight: 620;
     }
 
     .footer a {
-      color: #64748b;
+      color: #475569;
       text-decoration: none;
       transition: color var(--ease);
     }
 
     .footer a:hover {
       color: var(--accent-dark);
+    }
+
+    body.is-app-view .footer {
+      border-top-color: rgba(255, 255, 255, 0.08);
+      background: #06172d;
+      color: rgba(255, 255, 255, 0.68);
+    }
+
+    body.is-app-view .footer a {
+      color: rgba(255, 255, 255, 0.78);
+    }
+
+    body.is-app-view .footer a:hover {
+      color: #ffffff;
     }
 
     .app-shell {
@@ -452,6 +482,12 @@
     .app-shell.is-visible {
       opacity: 1;
       transform: translateY(0);
+    }
+
+    body.is-app-view {
+      background:
+        radial-gradient(circle at 18% 0%, rgba(59, 130, 246, 0.22), transparent 32rem),
+        linear-gradient(to bottom, #06172d 0%, #0b2340 58%, #102f52 100%);
     }
 
     .card {
@@ -716,7 +752,7 @@
       }
 
       .hero-content {
-        padding: 86px 14px 48px;
+        padding: 86px 14px 26px;
       }
 
       .landing {
@@ -748,7 +784,7 @@
         display: grid;
         grid-template-columns: 1fr;
         gap: 34px;
-        padding: 54px 14px 62px;
+        padding: 32px 14px 58px;
       }
 
       .mockup-left {
@@ -757,8 +793,8 @@
       }
 
       .mockup-image {
-        width: 108%;
-        margin-left: -4%;
+        width: 104%;
+        margin-left: -2%;
       }
 
       .feature-text {
@@ -770,7 +806,7 @@
       }
 
       .value-inner {
-        padding: 18px 14px 28px;
+        padding: 18px 14px 34px;
         text-align: left;
       }
 
@@ -785,7 +821,7 @@
       }
 
       .footer {
-        padding: 22px 14px 30px;
+        padding: 26px 14px 32px;
         justify-content: flex-start;
       }
 
@@ -818,9 +854,9 @@
 <body>
   <header class="site-header header">
     <div class="header-container">
-      <div class="logo">
+      <a class="logo home-link" href="/" aria-label="GhostReply home" onclick="showHomeView(); return false;">
         <img src="GhostReplyLogo.png" alt="GhostReply logo" />
-      </div>
+      </a>
     </div>
   </header>
 
@@ -831,7 +867,7 @@
           <div class="hero-copy">
             <h1>Never overthink a reply again.</h1>
             <p class="subtext">Paste any message. Get the perfect response instantly.</p>
-            <button class="cta" type="button" data-start-app>Try it free</button>
+            <button class="cta" type="button" data-start-app onclick="showAppView(); return false;">Try it free</button>
           </div>
 
           <div class="preview-wrap" aria-label="Product preview">
@@ -898,16 +934,10 @@
           </div>
 
           <p class="cta-note">Stop overthinking every message.</p>
-          <button class="cta secondary-cta" type="button" data-start-app>Start writing better replies →</button>
+          <button class="cta secondary-cta" type="button" data-start-app onclick="showAppView(); return false;">Start writing better replies →</button>
         </div>
       </div>
 
-      <footer class="footer">
-        <span>© Elliott Smith 2026</span>
-        <a href="#" aria-label="Contact">Contact</a>
-        <a href="#" aria-label="About">About</a>
-        <a href="#" aria-label="Privacy">Privacy</a>
-      </footer>
     </section>
 
     <section class="app-shell" id="app" aria-label="Reply generator">
@@ -965,12 +995,20 @@
         </div>
       </div>
     </section>
+
+    <footer class="footer">
+      <span>© Elliott Smith 2026</span>
+      <a href="mailto:es0144@uah.edu" aria-label="Contact">Contact</a>
+      <a href="#" aria-label="About">About</a>
+      <a href="#" aria-label="Privacy">Privacy</a>
+    </footer>
   </main>
 
   <script>
     const FUNCTION_ENDPOINT = "/.netlify/functions/generate";
 
     const startButtons = document.querySelectorAll("[data-start-app]");
+    const homeLinks = document.querySelectorAll(".home-link");
     const landingSection = document.querySelector(".landing");
     const appSection = document.querySelector("#app");
     const messageInput = document.querySelector("#message");
@@ -992,6 +1030,11 @@
     startButtons.forEach((button) => button.addEventListener("click", (event) => {
       event.preventDefault();
       showAppView();
+    }));
+
+    homeLinks.forEach((link) => link.addEventListener("click", (event) => {
+      event.preventDefault();
+      showHomeView();
     }));
 
     messageInput.addEventListener("input", () => {
@@ -1114,6 +1157,7 @@
     }
 
     function showAppView() {
+      document.body.classList.add("is-app-view");
       landingSection.classList.add("is-leaving");
 
       window.setTimeout(() => {
@@ -1125,6 +1169,13 @@
           messageInput.focus();
         });
       }, 240);
+    }
+
+    function showHomeView() {
+      document.body.classList.remove("is-app-view");
+      appSection.classList.remove("is-visible", "is-mounted");
+      landingSection.classList.remove("is-hidden", "is-leaving");
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     renderReply("");
